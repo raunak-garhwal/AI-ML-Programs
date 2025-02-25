@@ -7,7 +7,7 @@ import seaborn as sns
 
 # Load the data from the CSV file
 # Replace 'datas.csv' with the path to your CSV file
-data = pd.read_csv('ML-main/svm-data.csv')
+data = pd.read_csv('ML-Programs\Raunak-ML\svm-data.csv')
 
 # Display the first few rows of the dataframe
 print(data.head())

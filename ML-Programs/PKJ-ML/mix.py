@@ -21,7 +21,6 @@ plt.grid(axis='y', linestyle='--', alpha=0.7)
 # Show the bar graph
 plt.show()
 
-
 # Create a pie chart
 plt.figure(figsize=(6, 6))
 plt.pie(values, labels=categories, autopct='%1.1f%%', colors=colors, startangle=140, wedgeprops={'edgecolor': 'black'})

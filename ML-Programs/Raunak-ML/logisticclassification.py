@@ -4,7 +4,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 
 # Step 1: Load the dataset
-data = pd.read_csv('ML-main/logisticclassification-data.csv')  # Ensure the file name is correct
+data = pd.read_csv('ML-Programs\Raunak-ML\logisticclassification-data.csv')  # Ensure the file name is correct
 
 # Check the distribution of classes
 print(data['label'].value_counts())

@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 # Load the data from the CSV file
 # Replace 'population_data.csv' with the path to your CSV file
-data = pd.read_csv('ML-main/Population_data.csv')
+data = pd.read_csv('ML-Programs\Raunak-ML\Population_data.csv')
 
 # Check the first few rows of the dataframe
 print(data.head())
