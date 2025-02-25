@@ -5,14 +5,14 @@ import random
 random.seed(42)
 data = [(random.uniform(0, 2), 4 + 3 * x + random.gauss(0, 1)) for x in [random.uniform(0, 2) for _ in range(100)]]
 
-with open("ML-main/Linear_regression-dataset.csv", "w", newline="") as file:
+with open("ML-Programs\Raunak-ML\Linear_regression-dataset.csv", "w", newline="") as file:
     writer = csv.writer(file)
     writer.writerow(["X", "y"])
     writer.writerows(data)
 
 # Load data from CSV
 X, y = [], []
-with open("ML-main/Linear_regression-dataset.csv", "r") as file:
+with open("ML-Programs\Raunak-ML\Linear_regression-dataset.csv", "r") as file:
     reader = csv.reader(file)
     next(reader)  # Skip header
     for row in reader:

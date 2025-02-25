@@ -1,36 +1,54 @@
 import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
-# Step 1: Load the dataset
-data = pd.read_csv('ML-main/Knn-data.csv')
+# ✅ Step 1: Load Data from CSV
+df = pd.read_csv("ML-Programs/Raunak-ML/KNN_Dataset.csv")
 
-# Step 2: Prepare the features and labels
-X = data[['feature1', 'feature2']]  # Adjust column names if needed
-y = data['label']
+# ✅ Step 2: Select Features (X) and Target Variable (Y)
+X = df[['Age', 'Annual_Income', 'Spending_Score']].values  # Independent Variables
+Y = df['Label'].values  # Target Variable
 
-# Step 3: Split the dataset into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# ✅ Step 3: Split Data into Train and Test Sets
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
 
-# Step 4: Create the k-NN classifier
-k = 5  # You can choose any value for k
-knn = KNeighborsClassifier(n_neighbors=k)
+# ✅ Step 4: Standardize the Data (Improves KNN Performance)
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
 
-# Step 5: Fit the model
-knn.fit(X_train, y_train)
+# ✅ Step 5: Train KNN Model (Choosing K=5)
+knn_model = KNeighborsClassifier(n_neighbors=5, metric='euclidean')
+knn_model.fit(X_train, Y_train)
 
-# Step 6: Make predictions
-y_pred = knn.predict(X_test)
+# ✅ Step 6: Predict Using the Model
+Y_pred = knn_model.predict(X_test)
 
-# Step 7: Evaluate the model
-accuracy = accuracy_score(y_test, y_pred)
-print(f'✅ Accuracy: {accuracy * 100:.2f}%\n')
+# ✅ Step 7: Evaluate Model Performance
+accuracy = accuracy_score(Y_test, Y_pred)
+print(f"Model Accuracy: {accuracy:.2f}")
 
-# Print only the first 5 samples from the dataset
-print("🔹 First 5 Rows of Data:\n", data.head(5))
+# Print Classification Report & Confusion Matrix
+print("\nClassification Report:")
+print(classification_report(Y_test, Y_pred))
 
-# Optional: Predicting a new sample
-new_sample = pd.DataFrame([[5.0, 3.5]], columns=['feature1', 'feature2'])
-prediction = knn.predict(new_sample)
-print(f'\n🔮 Predicted class for {new_sample.values[0]}: {prediction[0]}')
+print("\nConfusion Matrix:")
+print(confusion_matrix(Y_test, Y_pred))
+
+# ✅ Step 8: Visualizing the Decision Boundary (Only for 2D Projection)
+plt.figure(figsize=(8, 6))
+plt.scatter(X_test[:, 0], X_test[:, 1], c=Y_test, cmap='coolwarm', edgecolor='k', label="Actual Data")
+
+# Plot Predicted Points with Different Marker
+plt.scatter(X_test[:, 0], X_test[:, 1], c=Y_pred, cmap='coolwarm', marker='x', alpha=0.7, label="Predicted Data")
+
+plt.xlabel('Age (Standardized)')
+plt.ylabel('Annual Income (Standardized)')
+plt.title('KNN Classification')
+plt.legend()
+plt.grid()
+plt.show()

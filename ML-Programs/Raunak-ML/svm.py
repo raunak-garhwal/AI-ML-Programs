@@ -1,43 +1,52 @@
+import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
-from sklearn.metrics import classification_report, confusion_matrix
-import matplotlib.pyplot as plt
-import seaborn as sns
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 
-# Load the data from the CSV file
-# Replace 'datas.csv' with the path to your CSV file
-data = pd.read_csv('ML-Programs\Raunak-ML\svm-data.csv')
+# Step 1: Load the dataset from CSV
+df = pd.read_csv("ML-Programs/Raunak-ML/SVM.csv")  # Replace 'dataset.csv' with your actual file path
 
-# Display the first few rows of the dataframe
-print(data.head())
+# Step 2: Prepare features (X) and labels (y)
+X = df[['Feature1', 'Feature2']].values
+y = df['Label'].values
 
-# Separate features and target variable
-X = data.drop('Target', axis=1)  # Features
-y = data['Target']                 # Target variable
-
-# Split the dataset into training and testing sets
+# Step 3: Split dataset into Training & Testing sets (80% train, 20% test)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Create and train the SVM model
-model = SVC(kernel='linear')  # You can change the kernel to 'rbf', 'poly', etc.
-model.fit(X_train, y_train)
+# Step 4: Train an SVM Model with a linear kernel
+svm_model = SVC(kernel='linear', random_state=42)
+svm_model.fit(X_train, y_train)
 
-# Make predictions
-y_pred = model.predict(X_test)
+# Step 5: Make Predictions
+y_pred = svm_model.predict(X_test)
 
-# Evaluate the model
-print("Confusion Matrix:")
-print(confusion_matrix(y_test, y_pred))
+# Step 6: Evaluate the Model
+accuracy = accuracy_score(y_test, y_pred)
+print(f"Accuracy: {accuracy:.2f}")
 
 print("\nClassification Report:")
-print(classification_report(y_test, y_pred))
+print(classification_report(y_test, y_pred, target_names=["Class 0", "Class 1"]))
 
-# Optional: Visualize the confusion matrix
-plt.figure(figsize=(8, 6))
-sns.heatmap(confusion_matrix(y_test, y_pred), annot=True, fmt='d', cmap='Blues', 
-            xticklabels=['Class 0', 'Class 1'], yticklabels=['Class 0', 'Class 1'])
-plt.title('Confusion Matrix')
-plt.xlabel('Predicted')
-plt.ylabel('Actual')
-plt.show()
+print("\nConfusion Matrix:")
+print(confusion_matrix(y_test, y_pred))
+
+# Step 7: Visualize the Decision Boundary
+def plot_decision_boundary(X, y, model):
+    x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
+    y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
+    xx, yy = np.meshgrid(np.linspace(x_min, x_max, 100),
+                         np.linspace(y_min, y_max, 100))
+
+    Z = model.predict(np.c_[xx.ravel(), yy.ravel()])
+    Z = Z.reshape(xx.shape)
+
+    plt.contourf(xx, yy, Z, alpha=0.3, cmap=plt.cm.coolwarm)
+    plt.scatter(X[:, 0], X[:, 1], c=y, edgecolors='k', cmap=plt.cm.coolwarm)
+    plt.xlabel("Feature 1")
+    plt.ylabel("Feature 2")
+    plt.title("SVM Decision Boundary")
+    plt.show()
+
+plot_decision_boundary(X, y, svm_model)

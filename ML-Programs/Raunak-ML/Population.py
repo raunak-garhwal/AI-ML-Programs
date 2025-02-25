@@ -1,29 +1,30 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Load the data from the CSV file
-# Replace 'population_data.csv' with the path to your CSV file
-data = pd.read_csv('ML-Programs\Raunak-ML\Population_data.csv')
+# ✅ Step 1: Load Population Data from CSV
+df = pd.read_csv("ML-Programs/Raunak-ML/Population.csv")
 
-# Check the first few rows of the dataframe
-print(data.head())
+# ✅ Step 2: Sort Data for Better Visualization
+df = df.sort_values(by="Population", ascending=False).head(15)  # Top 15 countries
 
-# Extract the country names and population values
-labels = data['Country']
-sizes = data['Population']
+# ✅ Step 3: Create a Bar Graph
+plt.figure(figsize=(12, 6))
+plt.bar(df["Country"], df["Population"], color='skyblue', edgecolor='black')
+plt.xlabel("Country", fontsize=12)
+plt.ylabel("Population (in millions)", fontsize=12)
+plt.title("Top 15 Most Populated Countries", fontsize=14)
+plt.xticks(rotation=45, ha='right')  # Rotate country names for better visibility
+plt.grid(axis='y', linestyle='--', alpha=0.7)
 
-# Define colors for each slice
-colors = plt.cm.tab20.colors  # You can choose a different colormap if you want
+# Add population values above bars
+for i, val in enumerate(df["Population"]):
+    plt.text(i, val + 5, str(val), ha='center', fontsize=10, color='black')
 
-# Create a pie chart
-plt.figure(figsize=(10, 7))
-plt.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=140)
+plt.show()
 
-# Equal aspect ratio ensures that pie is drawn as a circle
-plt.axis('equal')  
-
-# Title of the pie chart
-plt.title('Population Distribution by Country')
-
-# Show the pie chart
+# ✅ Step 4: Create a Pie Chart
+plt.figure(figsize=(8, 8))
+plt.pie(df["Population"], labels=df["Country"], autopct='%1.1f%%', 
+        colors=plt.cm.Paired.colors, startangle=140, textprops={'fontsize': 10})
+plt.title("Population Distribution of Top 15 Countries", fontsize=14)
 plt.show()
