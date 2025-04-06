@@ -1,28 +1,22 @@
 graph = {}
+visited = set() # Set to keep track of visited nodes of graph.
 
-node_count = int(input("How many nodes you want to enter: "))
-for key in range(node_count):
-    node = input("Enter Node: ")
-    neighbours = input("Enter neighbours of above node (separated by spaces): ").split()
-    graph[node] = neighbours
+def dfs(visited, graph, node):
+	if node not in visited:
+		print(node, end=" ")
+		visited.add(node)
+		
+		for neighbour in graph[node]:
+			dfs(visited, graph, neighbour)
 
-print("Graph :", graph)
+key = int(input("\nEnter the number of nodes in the graph:- "))
+for i in range(key):
+	node = input("\nEnter a node:- ")
+	neighbours = input("\nEnter its neighbours with spaces:- ").split()
+	graph[node] = neighbours
 
+print("\nGraph:- ", graph)
 
-def dfs(graph, node, visited=None):
-    if visited is None:
-        visited = set()  # Initialize visited set the first time
-
-    # Mark the node as visited
-    visited.add(node)
-    print(node, end=' ')  # Process the node (e.g., print it)
-
-    # Recursively visit each unvisited neighbor
-    for neighbor in graph[node]:
-        if neighbor not in visited:
-            dfs(graph, neighbor, visited)
-
-
-n = input("Enter the node to traverse : ")
-print(f"DFS Traversal from node-{n}:")
-dfs(graph, n)
+start_node = input("\nEnter a starting node for DFS traversal:- ")
+print(f"\nFollowing is the Depth-First Search (Starting from Node {start_node}):- ")
+dfs(visited, graph, start_node)

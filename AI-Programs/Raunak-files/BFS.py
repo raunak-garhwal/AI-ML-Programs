@@ -1,32 +1,28 @@
 graph = {}
+visited = []   # List for visited nodes.
+queue = []     # Initialize a queue
 
-node_count = int(input("How many nodes you want to enter: "))
-for key in range(node_count):
-    node = input("Enter Node: ")
-    neighbours = input("Enter neighbours of above node (separated by spaces): ").split()
-    graph[node] = neighbours
+def bfs(visited, graph, node):
+	visited.append(node)
+	queue.append(node)
 
-print("Graph :", graph)
+	while queue:   # Creating loop to visit each node
+		m = queue.pop(0) 
+		print(m, end=" ")
 
+		for neighbour in graph[m]:
+			if neighbour not in visited:
+				visited.append(neighbour)
+				queue.append(neighbour)
+				
+key = int(input("\nEnter the number of nodes in the graph:- "))
+for i in range(key):
+	node = input("\nEnter a node:- ")
+	neighbours = input("\nEnter its neighbours with spaces:- ").split()
+	graph[node] = neighbours
 
-def bfs(graph, start):
-    visited = set()  # Set to track visited nodes
-    queue = [start]  # Initialize queue with the starting node
+print("\nGraph:- ", graph)
 
-    while queue:
-        node = queue.pop(0)  # Pop the first node (FIFO)
-        
-        if node not in visited:
-            visited.add(node)  # Mark the node as visited
-            print(node, end=' ')  # Process the node (here we just print it)
-            
-            # Add all unvisited neighbors to the queue
-            for neighbor in graph[node]:
-                if neighbor not in visited:
-                    queue.append(neighbor)
-
-
-n = input("Enter Node to Traverse: ")
-
-print(f"BFS Traversal from node {n}:")
-bfs(graph, n)
+start_node = input("\nEnter a starting node for BFS traversal:- ")
+print(f"\nFollowing is the Breadth-First Search (Starting from Node {start_node}):- ")
+bfs(visited, graph, start_node)
