@@ -111,11 +111,6 @@ if __name__ == "__main__":
 
 
 
-
-
-
-
-
 """
 Enter the number of nodes: 5
 Enter the node name: Start

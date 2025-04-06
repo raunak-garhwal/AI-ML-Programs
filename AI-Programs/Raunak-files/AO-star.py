@@ -110,8 +110,6 @@ if __name__ == "__main__":
     print(f"\nFinal cost to complete all tasks: {result}")
 
 
-
-
 """
 Enter the number of nodes: 5
 Enter the node name: Start

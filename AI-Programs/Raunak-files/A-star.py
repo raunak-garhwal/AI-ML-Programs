@@ -101,7 +101,6 @@ if __name__ == "__main__":
 
 
 """
-
 Enter the nodes separated by spaces: A B C D
 
 Enter neighbors for node 'A' (format: neighbor1 cost1, neighbor2 cost2, ...):
