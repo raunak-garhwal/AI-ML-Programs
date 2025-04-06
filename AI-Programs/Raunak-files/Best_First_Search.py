@@ -12,8 +12,7 @@ def bfs(start, goal):
     return None
 
 def get_input():
-    return tuple(map(int, input("\nEnter starting coordinates (x y): ").split())), \
-           tuple(map(int, input("\nEnter goal coordinates (x y): ").split()))
+    return tuple(map(int, input("\nEnter starting coordinates (x y): ").split())), tuple(map(int, input("\nEnter goal coordinates (x y): ").split()))
 
 def main():
     start, goal = get_input()

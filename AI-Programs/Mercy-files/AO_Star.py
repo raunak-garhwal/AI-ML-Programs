@@ -13,8 +13,7 @@ def ao_star(start, goal):
     return None
 
 def get_input():
-    return tuple(map(int, input("Enter starting coordinates (x y): ").split())), \
-           tuple(map(int, input("Enter goal coordinates (x y): ").split()))
+    return tuple(map(int, input("Enter starting coordinates (x y): ").split())), tuple(map(int, input("Enter goal coordinates (x y): ").split()))
 
 def main():
     start, goal = get_input()

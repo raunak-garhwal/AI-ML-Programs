@@ -1,65 +1,72 @@
-def print_board(board):
-    """Utility function to print the chessboard with queens."""
-    N = len(board)
-    for i in range(N):
-        row = ['Q' if x == 1 else '.' for x in board[i]]
+# Function to print the matrix with solution number
+def printMatrix(matrix, solution_number):
+    print(f"\nSolution {solution_number}:")
+    for row in matrix:
         print(" ".join(row))
-    print()
-
-def is_safe(board, row, col):
-    """Check if it's safe to place a queen at board[row][col]."""
-    N = len(board)
     
-    # Check the column
+# Function to check if placing a queen at (row, col) is safe
+def isSafe(matrix, row, col):
+    # Check this column on the upper side
     for i in range(row):
-        if board[i][col] == 1:
+        if matrix[i][col] == 'Q':
             return False
-    
-    # Check the upper left diagonal
-    for i, j in zip(range(row-1, -1, -1), range(col-1, -1, -1)):
-        if board[i][j] == 1:
+
+    # Check upper diagonal on the left side
+    i, j = row, col
+    while i >= 0 and j >= 0:
+        if matrix[i][j] == 'Q':
             return False
-    
-    # Check the upper right diagonal
-    for i, j in zip(range(row-1, -1, -1), range(col+1, N)):
-        if board[i][j] == 1:
+        i -= 1
+        j -= 1
+
+    # Check upper diagonal on the right side
+    i, j = row, col
+    while i >= 0 and j < n:
+        if matrix[i][j] == 'Q':
             return False
-    
+        i -= 1
+        j += 1
+
     return True
 
-def solve_n_queens_util(board, row):
-    """Utilizes backtracking to solve the N-Queens problem."""
-    N = len(board)
-    
-    # If all queens are placed
-    if row == N:
-        print_board(board)
+# Function to solve the N-Queen problem using backtracking
+def solveNQueen(matrix, row, solution_count):
+    # If all queens are placed successfully, print the solution
+    if row == n:
+        solution_count[0] += 1
+        printMatrix(matrix, solution_count[0])
         return True
 
+    # Try placing the queen in each column of the current row
     res = False
-    for col in range(N):
-        # Check if placing the queen is safe
-        if is_safe(board, row, col):
-            # Place the queen
-            board[row][col] = 1
-            
-            # Recursively place the queen on the next row
-            res = solve_n_queens_util(board, row + 1) or res
+    for col in range(n):
+        if isSafe(matrix, row, col):
+            matrix[row][col] = 'Q'  # Place queen
+            # Recur to place the rest of the queens
+            res = solveNQueen(matrix, row + 1, solution_count) or res
+            matrix[row][col] = '*'  # Backtrack if placing the queen doesn't lead to a solution
 
-            # Backtrack (Remove the queen if placing it doesn't lead to a solution)
-            board[row][col] = 0
-    
     return res
 
-def solve_n_queens(N):
-    """Solve the N-Queens problem using backtracking."""
-    # Initialize the chessboard
-    board = [[0 for _ in range(N)] for _ in range(N)]
-    
-    if not solve_n_queens_util(board, 0):
-        print("Solution does not exist.")
-    else:
-        print(f"Solutions for {N}-Queens problem")
+# Driver code
+print("\n<---N-Queen Problem--->")
+n = int(input("\nEnter the value of n : "))
 
-queens = int(input("Enter the number of queens : "))
-solve_n_queens(queens)
+matrix = [['*' for _ in range(n)] for _ in range(n)]
+solution_count = [0]  # To keep track of the number of solutions
+
+# Check if a solution exists
+if not solveNQueen(matrix, 0, solution_count):
+    print("\nNo solution exists for the given value of n.")
+else:
+    print(f"\nTotal solutions: {solution_count[0]}")
+
+# No of Solutions :-
+#  n --> solutions
+#  4 --> 2
+#  5 --> 10
+#  6 --> 4
+#  7 --> 40
+#  8 --> 92
+#  9 --> 352
+# 10 --> 724
