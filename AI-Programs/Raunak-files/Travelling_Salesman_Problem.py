@@ -13,7 +13,7 @@ def generate_permutations(arr, start, end, result):
 
 # Main function to solve TSP
 def traveling_salesman_problem():
-    n = int(input("Enter the number of cities: "))
+    n = int(input("\nEnter the number of cities: "))
     distance_matrix = [[int(input(f"Distance from city {i+1} to city {j+1}: ")) if i != j else 0 for j in range(n)] for i in range(n)]
     
     cities = list(range(n))
@@ -23,8 +23,8 @@ def traveling_salesman_problem():
     best_route = min(all_routes, key=lambda route: calculate_total_distance(route, distance_matrix))
     min_distance = calculate_total_distance(best_route, distance_matrix)
     
-    print(f"The best route is: {'-> '.join(str(city + 1) for city in best_route)}")
-    print(f"The minimum total distance is: {min_distance}")
+    print(f"\nThe best route is: {' -> '.join(str(city + 1) for city in best_route)}")
+    print(f"\nThe minimum total distance is: {min_distance}")
 
 # Call the TSP function to execute the program
 traveling_salesman_problem()
