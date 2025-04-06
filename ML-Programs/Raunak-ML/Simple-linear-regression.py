@@ -32,7 +32,7 @@ m = model.coef_[0]  # Slope of the regression line
 c = model.intercept_  # Intercept (where the line crosses Y-axis)
 
 # Printing Model Parameters
-print(f"\n✅ Model Trained Successfully!\n")
+print(f"\nModel Trained Successfully!\n")
 print(f"Model Coefficient (Slope, m): {m}")
 print(f"Model Intercept (c): {c}")
 
